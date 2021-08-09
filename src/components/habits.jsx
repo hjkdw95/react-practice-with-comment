@@ -30,6 +30,8 @@ class Habits extends Component {
                     <Habit 
                         key = {habit.id} 
                         habit = {habit} 
+                        name = {habit.name}
+                        count = {habit.count} /* 계속 변화하는 것을 따로 떼서 오브젝트로 만든다 */
                         onIncrement={this.handleIncrement}
                         onDecrement={this.handleDecrement}
                         onDelete={this.handleDelete}
@@ -37,6 +39,7 @@ class Habits extends Component {
                     /* state가 있는곳에서 메소드 다루게 했으니 props로 habit에 보내준다 */
                 ))}
             </ul>
+            <button className="habits-reset" onClick={this.props.onReset}>Reset All</button> {/*reset버튼은 반복되어 사용되지 않기 때문에 컴포넌트화 하지 않는다 - 추후에 필요할 시 컴포넌트화 예정 */}
         </>
     }
 }

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Habit extends Component {    
+class Habit extends PureComponent {    
     /* props로 전달된 콜백함수들이 버튼 클릭되면 활성화되도록 한다 */
     handleIncrement = () => {
         this.props.onIncrement(this.props.habit);
