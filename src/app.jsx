@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './app.css';
 import Habits from './components/habits';
-import Navbar from './components/ navbar';
+import Navbar from './components/navbar';
 
 
 class App extends Component {
@@ -38,6 +38,15 @@ handleDelete = (habit) => {
     this.setState({habits}); 
 }
 
+handleAdd = (name) => {
+  const habits = [...this.state.habits, 
+    {id: Date.now(),
+    name,
+    count: 0}]; /* spread operator 사용하면 맨 마지막에 그냥 직접적으로 obj추가해주면 됨 */
+
+  this.setState({habits});
+}
+
 
   render() {
     return (
@@ -50,9 +59,10 @@ handleDelete = (habit) => {
           onIncrement={this.handleIncrement}
           onDecrement={this.handleDecrement}
           onDelete={this.handleDelete}
+          onAdd={this.handleAdd}
         />
       </>
-    );
+    )
   }
 }
 

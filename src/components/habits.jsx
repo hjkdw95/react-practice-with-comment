@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Habit from './habit';
+import HabitAddFrom from './habitAddFrom';
 
 class Habits extends Component {
     handleIncrement = (habit) => {
@@ -14,20 +15,29 @@ class Habits extends Component {
     handleDelete = (habit) => {
         this.props.onDelete(habit)
     }
+
+    handleAdd = (name) => {
+        this.props.onAdd(name);
+    }
     
     render() {
-        return <ul>
-            {this.props.habits.map(habit => (
-                <Habit 
-                    key = {habit.id} 
-                    habit = {habit} 
-                    onIncrement={this.handleIncrement}
-                    onDecrement={this.handleDecrement}
-                    onDelete={this.handleDelete}
-                /> /* 인자로 들인 object를 props로 전달, 자식 component를 갖게 되니까 props.key도 설정해준다 */
-                /* state가 있는곳에서 메소드 다루게 했으니 props로 habit에 보내준다 */
-            ))};
-        </ul>
+        return <>
+            <HabitAddFrom 
+                onAdd={this.handleAdd}
+            />
+            <ul>
+                {this.props.habits.map(habit => (
+                    <Habit 
+                        key = {habit.id} 
+                        habit = {habit} 
+                        onIncrement={this.handleIncrement}
+                        onDecrement={this.handleDecrement}
+                        onDelete={this.handleDelete}
+                    /> /* 인자로 들인 object를 props로 전달, 자식 component를 갖게 되니까 props.key도 설정해준다 */
+                    /* state가 있는곳에서 메소드 다루게 했으니 props로 habit에 보내준다 */
+                ))}
+            </ul>
+        </>
     }
 }
 
