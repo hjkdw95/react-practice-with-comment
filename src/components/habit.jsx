@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 
-class Habit extends Component {
-    state = {
-        count: 0,
-    }
-    
+class Habit extends Component {    
+    /* props로 전달된 콜백함수들이 버튼 클릭되면 활성화되도록 한다 */
     handleIncrement = () => {
-        /* state object의 count 1 증가한 뒤, state를 업데이트 한다 */
-        this.setState({count: this.state.count + 1});
+        this.props.onIncrement(this.props.habit);
     }
 
     handleDecrement = () => {
-        const count = this.state.count - 1;
-        this.setState({count: count < 0 ? 0 : count}); /* obj 내에서 삼항연산자 사용 가능 */
+        this.props.onDecrement(this.props.habit);
+    }
+
+    handleDelete = () => {
+        this.props.onDelete(this.props.habit);
     }
 
     render() {
@@ -27,7 +26,7 @@ class Habit extends Component {
                 <button className="habit-button habit-decrease" onClick={this.handleDecrement}>
                     <i className="fas fa-minus-square"></i>
                 </button>
-                <button className="habit-button habit-trash">
+                <button className="habit-button habit-trash" onClick={this.handleDelete}>
                     <i className="fas fa-trash"></i>
                 </button>
             </li>
