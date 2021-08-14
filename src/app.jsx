@@ -16,19 +16,24 @@ class App extends Component {
 
   /* state가 있는 곳에서 method 다루게 할 것 */
   handleIncrement = (habit) => {
-    const habits = [...this.state.habits] /*state.habits를 복사 */
-    /* 받아온 habit이 몇번째 index에 있는지 확인 */
-    const index = habits.indexOf(habit);
-    habits[index].count++;
-    this.setState({ habits }); /* key, value이름이 동일한 경우 생략 가능 */
+    const habits = this.state.habits.map(item => {
+      if(item.id === habit.id) { // 만약 item의 id가 증가시켜야하는 id(habit id)와 동일할 경우
+        return { ...habit, count: habit.count + 1} // habit을 copy하는데 count 부분만 1추가해서 리턴해라 -> 이 방법을 사용하면 render가 필요한 부분만 일어나게 된다
+      }
+      return item;
+    });
+    this.setState({ habits });
 }
 
 handleDecrement = (habit) => {
-    const habits = [...this.state.habits];
-    const index = habits.indexOf(habit);
-    const count = habits[index].count - 1;
-    habits[index].count = count < 0 ? 0 : count; /* obj를 직접 건드리는 형태로 좋지 않은 예시이다 */
-    this.setState({habits});
+  const habits = this.state.habits.map(item => {
+    if(item.id === habit.id) {
+      const count = habit.count - 1
+      return {...habit, count: count < 0 ? 0 : count} // count의 결과 값이 0보다 작을 경우 0이하로 안나타나도록 처리
+    }
+    return item;
+  });
+  this.setState({ habits });
 }
 
 handleDelete = (habit) => {
@@ -49,7 +54,9 @@ handleAdd = (name) => {
 
 handleReset = () => {
   const habits = this.state.habits.map(habit => {
-    habit.count = 0;
+    if(habit.count !== 0) { // habit.count가 0이 아닐때만 반응하게 하여 불필요한 렌더 줄임
+      return {...habit, count: 0} 
+    }
     return habit;
   })
   this.setState({habits});
